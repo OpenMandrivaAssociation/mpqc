@@ -102,7 +102,6 @@ Icon=sciences_section
 Terminal=false
 Type=Application
 Categories=Science;Chemistry;
-Encoding=UTF-8
 EOF
 
 %multiarch_binaries %buildroot%_bindir/sc-config
