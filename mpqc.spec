@@ -1,6 +1,6 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define	major	7
 %define	libname	%mklibname SC %major
@@ -92,24 +92,16 @@ make install installroot=$RPM_BUILD_ROOT
 make install_devel installroot=$RPM_BUILD_ROOT
 cp -r doc/man %buildroot/%_datadir
 
-# Menu
-mkdir -p %buildroot/%{_menudir}
-cat > %buildroot/%{_menudir}/molrender <<EOF
-?package(molrender): command="%{_bindir}/tkmolrender" needs="X11" \
-icon="sciences_section.png" section="Applications/Sciences/Chemistry" \
-title="Molrender" longtitle="Molecular Rendering GUI" xdg="true"
-EOF
-
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Name=Molrender
-Comment=%{Summary}
+Comment=Ab-inito chemistry program
 Exec=%{_bindir}/tkmolrender
 Icon=sciences_section
 Terminal=false
 Type=Application
-Categories=X-MandrivaLinux-MoreApplications-Sciences-Chemistry;Science;Chemistry;
+Categories=Science;Chemistry;
 Encoding=UTF-8
 EOF
 
@@ -166,9 +158,5 @@ rm -rf %buildroot
 %defattr(-,root,root)
 %{_bindir}/molrender
 %{_bindir}/tkmolrender
-%{_menudir}/molrender
 %{_datadir}/applications/mandriva-%{name}.desktop
 %{_mandir}/man1/molrender*
-
-
-
