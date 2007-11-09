@@ -1,11 +1,11 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define	major	7
 %define	libname	%mklibname SC %major
 
-%define __libtoolize /bin/true
+#%define __libtoolize /bin/true
 
 Summary: 	Ab-inito chemistry program
 Name: 		%name
