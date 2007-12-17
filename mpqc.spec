@@ -15,7 +15,6 @@ License: 	GPL
 Group: 		Sciences/Chemistry
 Source: 	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
 URL: 		http://mpqc.org/
-BuildRoot: 	%{_tmppath}/%name-buildroot
 BuildRequires: 	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
 BuildConflicts:	gcc3.3-g77
