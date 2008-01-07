@@ -1,9 +1,10 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 5
+%define release %mkrel 6
 
-%define	major	7
-%define	libname	%mklibname SC %major
+%define	major		7
+%define	libname		%mklibname SC %major
+%define develname	%mklibname SC -d
 
 #%define __libtoolize /bin/true
 
@@ -18,6 +19,7 @@ URL: 		http://mpqc.org/
 BuildRoot: 	%{_tmppath}/%name-buildroot
 BuildRequires: 	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
+BuildRequires:	autoconf
 BuildConflicts:	gcc3.3-g77
 
 %description
@@ -64,13 +66,15 @@ This package contains the library needed to run programs dynamically linked
 with %libname, the scientific computing toolkit, based on mpqc computational 
 chemistry package from Sandia Labs.
 
-%package -n %libname-devel
+%package -n %{develname}
 Summary:        Main libraries for %name
 Group:          Development/C++
 Requires:	%libname = %version
 Provides:	libSC-devel
+Provides:	SC-devel
+Obsoletes:	%{mklibname SC 7 -d}
 
-%description -n %{libname}-devel
+%description -n %{develname}
 This package contains the library needed to run programs dynamically linked
 with %libname, the scientific computing toolkit, based on mpqc computational
 chemistry package from Sandia Labs.
@@ -79,6 +83,8 @@ chemistry package from Sandia Labs.
 %setup -q
 
 %build
+sed -i -e 's,prefix\/lib,prefix\/%{_lib},g' configure.in
+autoconf
 %configure2_5x --enable-shared --enable-threads
 %make
 cd doc
@@ -87,11 +93,11 @@ make man1
 make man3
 
 %install
-rm -fr %buildroot
+rm -fr %{buildroot}
 echo hello
-make install installroot=$RPM_BUILD_ROOT
-make install_devel installroot=$RPM_BUILD_ROOT
-cp -r doc/man %buildroot/%_datadir
+make install installroot=%{buildroot}
+make install_devel installroot=%{buildroot}
+cp -r doc/man %buildroot/%{_datadir}
 
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -105,10 +111,10 @@ Type=Application
 Categories=Science;Chemistry;
 EOF
 
-%multiarch_binaries %buildroot%_bindir/sc-config
+%multiarch_binaries %{buildroot}%{_bindir}/sc-config
 
 %clean
-rm -rf %buildroot
+rm -rf %{buildroot}
 
 %post -n molrender
 %{update_menus}
@@ -116,12 +122,12 @@ rm -rf %buildroot
 %postun -n molrender
 %{clean_menus}
 
-%post -n %libname -p /sbin/ldconfig
-%postun -n %libname -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root)
-%doc CHANGES CITATION COPYING COPYING.LIB LICENSE README
+%doc CHANGES CITATION LICENSE README
 %{_bindir}/mpqc
 %{_bindir}/chkmpqcout
 %{_bindir}/scls
@@ -141,9 +147,9 @@ rm -rf %buildroot
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/lib*.so.*
+%{_libdir}/lib*.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %{_bindir}/sc-*
 %{multiarch_bindir}/sc-config
