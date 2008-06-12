@@ -116,11 +116,15 @@ EOF
 %clean
 rm -rf %{buildroot}
 
+%if %mdkversion < 200900
 %post -n molrender
 %{update_menus}
+%endif
 
+%if %mdkversion < 200900
 %postun -n molrender
 %{clean_menus}
+%endif
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
