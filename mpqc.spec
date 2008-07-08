@@ -6,7 +6,6 @@
 %define	libname		%mklibname SC %major
 %define develname	%mklibname SC -d
 
-#%define __libtoolize /bin/true
 
 Summary: 	Ab-inito chemistry program
 Name: 		%name
