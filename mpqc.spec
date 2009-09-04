@@ -1,6 +1,6 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 6
+%define release %mkrel 7
 
 %define	major		7
 %define	libname		%mklibname SC %major
