@@ -15,6 +15,7 @@ License: 	GPL
 Group: 		Sciences/Chemistry
 Source: 	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
 URL: 		http://mpqc.org/
+Patch0:		mpqc-2.3.1-linkage.patch
 BuildRoot: 	%{_tmppath}/%name-buildroot
 BuildRequires: 	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
@@ -80,6 +81,7 @@ chemistry package from Sandia Labs.
 
 %prep
 %setup -q
+%patch0 -p0 -b .link
 
 %build
 sed -i -e 's,prefix\/lib,prefix\/%{_lib},g' configure.in
