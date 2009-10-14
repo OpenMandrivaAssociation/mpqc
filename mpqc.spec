@@ -1,6 +1,6 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 7
+%define release %mkrel 8
 
 %define	major		7
 %define	libname		%mklibname SC %major
@@ -15,7 +15,7 @@ License: 	GPL
 Group: 		Sciences/Chemistry
 Source: 	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
 URL: 		http://mpqc.org/
-Patch0:		mpqc-2.3.1-linkage.patch
+Patch0:		mpqc-2.3.1-mdv-fix-wfn-lib.patch
 BuildRoot: 	%{_tmppath}/%name-buildroot
 BuildRequires: 	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
@@ -81,7 +81,7 @@ chemistry package from Sandia Labs.
 
 %prep
 %setup -q
-%patch0 -p0 -b .link
+%patch0 -p1 -b .wfn
 
 %build
 sed -i -e 's,prefix\/lib,prefix\/%{_lib},g' configure.in
