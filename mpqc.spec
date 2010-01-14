@@ -1,6 +1,6 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 10
+%define release %mkrel 11
 
 %define	major		7
 %define	libname		%mklibname SC %major
@@ -11,7 +11,7 @@ Summary: 	Ab-inito chemistry program
 Name: 		%name
 Version: 	%version
 Release: 	%release
-License: 	GPL
+License: 	GPLv2+
 Group: 		Sciences/Chemistry
 Source: 	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
 URL: 		http://mpqc.org/
