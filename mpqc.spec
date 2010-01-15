@@ -1,6 +1,6 @@
 %define name 	mpqc
 %define version 2.3.1
-%define release %mkrel 11
+%define release %mkrel 12
 
 %define	major		7
 %define	libname		%mklibname SC %major
@@ -15,7 +15,6 @@ License: 	GPLv2+
 Group: 		Sciences/Chemistry
 Source: 	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
 URL: 		http://mpqc.org/
-Patch0:		mpqc-2.3.1-mdv-fix-wfn-lib.patch
 BuildRoot: 	%{_tmppath}/%name-buildroot
 BuildRequires: 	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
@@ -81,7 +80,6 @@ chemistry package from Sandia Labs.
 
 %prep
 %setup -q
-%patch0 -p1 -b .wfn
 
 %build
 sed -i -e 's,prefix\/lib,prefix\/%{_lib},g' configure.in
@@ -111,6 +109,9 @@ Terminal=false
 Type=Application
 Categories=Science;Chemistry;
 EOF
+
+# inelegant workaround to fix sc-config
+sed -i -e 's:libSCdft.la libSCscf.la libSCwfn.la:libSCwfn.la libSCdft.la libSCscf.la:' %{buildroot}%{_bindir}/sc-config
 
 %multiarch_binaries %{buildroot}%{_bindir}/sc-config
 
