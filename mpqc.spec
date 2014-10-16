@@ -5,12 +5,11 @@
 Summary:	Ab-inito chemistry program
 Name:		mpqc
 Version:	2.3.1
-Release:	15
+Release:	16
 License:	GPLv2+
 Group:		Sciences/Chemistry
 Source0:	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
-Patch0:		mpqc-2.3.1-gentoo-respect-ldflags.patch
-Patch1:		mpqc-2.3.1-gentoo-as-needed.patch
+Patch0:		mpqc-2.3.1-fix-sc-config.patch
 URL:		http://mpqc.org/
 BuildRequires:	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
@@ -75,31 +74,26 @@ chemistry package from Sandia Labs.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%apply_patches
 
 %build
-%define _disable_ld_no_undefined 1
-
 sed -i -e 's,prefix\/lib,prefix\/%{_lib},g' configure.in
 autoconf
-%configure2_5x --enable-shared --enable-threads
+%configure2_5x \
+	--enable-shared \
+	--disable-static \
+	--enable-threads
 make
 cd doc
 %make
 make man1
 make man3
 
-%check
-#make check
-#make testbuild
-#make testrun
-
 %install
 echo hello
 make install installroot=%{buildroot}
 make install_devel installroot=%{buildroot}
-cp -r doc/man %buildroot/%{_datadir}
+cp -r doc/man %{buildroot}%{_datadir}
 
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -133,7 +127,7 @@ chmod 0755 %{buildroot}%{_libdir}/lib*.so.%{major}*
 %{_mandir}/man1/scpr*
 
 %files data
-%{_datadir}/%name
+%{_datadir}/%{name}
 
 %files html
 %doc doc/html
@@ -145,7 +139,6 @@ chmod 0755 %{buildroot}%{_libdir}/lib*.so.%{major}*
 %{_bindir}/sc-*
 %{multiarch_bindir}/sc-config
 %{_libdir}/lib*.so
-%{_libdir}/*.a
 %{_includedir}/*
 %{_mandir}/man1/sc-*
 %{_mandir}/man3/*
