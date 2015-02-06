@@ -5,7 +5,7 @@
 Summary:	Ab-inito chemistry program
 Name:		mpqc
 Version:	2.3.1
-Release:	16
+Release:	17
 License:	GPLv2+
 Group:		Sciences/Chemistry
 Source0:	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
