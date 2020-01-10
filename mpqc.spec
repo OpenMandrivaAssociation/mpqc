@@ -74,7 +74,7 @@ chemistry package from Sandia Labs.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 %build
 sed -i -e 's,prefix\/lib,prefix\/%{_lib},g' configure.in
