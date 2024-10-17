@@ -10,7 +10,7 @@ License:	GPLv2+
 Group:		Sciences/Chemistry
 Source0:	http://prdownloads.sourceforge.net/mpqc/%name-%version.tar.bz2
 Patch0:		mpqc-2.3.1-fix-sc-config.patch
-URL:		http://mpqc.org/
+URL:		https://mpqc.org/
 BuildRequires:	flex bison lapack-devel
 BuildRequires:	gcc-gfortran tk blas-devel mpich2-devel doxygen
 BuildRequires:	autoconf
